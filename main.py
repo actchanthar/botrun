@@ -30,28 +30,27 @@ async def startup():
     """Startup tasks"""
     logger.info("🚀 Bot Manager Starting...")
     await db.connect()
-    
+
     # Initialize bot monitor
     monitor = BotMonitor(db)
     asyncio.create_task(monitor.start_monitoring())
-    
+
     # Check premium expiries
     asyncio.create_task(check_premium_expiry())
-    
+
     logger.info("✅ Bot Manager Ready!")
 
 async def check_premium_expiry():
     """Check and notify premium expiries"""
     from datetime import datetime, timedelta
     from config import PREMIUM_EXPIRY_WARNING_DAYS
-    
+
     while True:
         try:
             users = await db.get_expiring_premium_users(PREMIUM_EXPIRY_WARNING_DAYS)
             for user in users:
                 days_left = (user['premium_expiry'] - datetime.now()).days
-                await app.send_message(
-                    user['user_id'],
+                message_text = (
                     f"⚠️ **Premium Expiry Warning**
 
 "
@@ -59,10 +58,11 @@ async def check_premium_expiry():
 "
                     f"Renew now to continue using premium features!"
                 )
+                await app.send_message(user['user_id'], message_text)
                 await db.mark_notified(user['user_id'])
         except Exception as e:
             logger.error(f"Premium expiry check error: {e}")
-        
+
         await asyncio.sleep(3600)  # Check every hour
 
 async def main():
