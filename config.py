@@ -4,12 +4,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Main Bot Configuration
-API_ID = int(os.getenv("API_ID", "0"))
-API_HASH = os.getenv("API_HASH", "")
-BOT_TOKEN = os.getenv("BOT_TOKEN", "")
+API_ID = int(os.getenv("API_ID", "25465082"))
+API_HASH = os.getenv("API_HASH", "4a6b5e40c8bc08c8af09add6cca23b18")
+BOT_TOKEN = os.getenv("BOT_TOKEN", "8320701136:AAHUXMQ6tgg23RO2elCt05M7xZ-aBZcJcB4")
 
 # MongoDB Configuration
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
+MONGO_URI = os.getenv("MONGO_URI", "mongodb+srv://act:actdata@cluster0.z6trhoh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 DATABASE_NAME = os.getenv("DATABASE_NAME", "bot_manager")
 
 # Admin Configuration
